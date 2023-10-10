@@ -7,7 +7,7 @@ const laptopController = require('./controllers/laptops');
 
 
 // Use Express Router for each controller
-app.use('classB/laptop', laptopController);
+app.use('/classB/laptop', laptopController);
 
 
 // Start the Express server

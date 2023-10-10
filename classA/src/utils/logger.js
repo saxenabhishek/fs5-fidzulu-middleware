@@ -10,39 +10,45 @@ const filePrefix = (callingFile) => {
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(
-      winston.format.timestamp(),
-      winston.format.printf(({ timestamp, level, message }) => {
-        return `${timestamp} [${level.toUpperCase()}]: ${message}`;
-      })
-    ),
-    transports: [
-      new winston.transports.Console(),
-      new winston.transports.File({ filename: 'app.log' }),
-    ],
-  });
-
-const createLoggerWithPrefix = (fileName) => winston.createLogger({
-    format: winston.format.combine(
         winston.format.timestamp(),
-        winston.format.colorize(),
-        filePrefix(fileName),
+        winston.format.printf(({ timestamp, level, message }) => {
+            return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+        })
     ),
     transports: [
-        new winston.transports.Console()
-        //Add more transports as needed
-    ]
+        new winston.transports.Console(),
+        new winston.transports.File({ filename: 'app.log' }),
+    ],
 });
+
+const createLoggerWithPrefix = (fileName) => {
+    return winston.createLogger({
+        level: 'info',
+        format: winston.format.combine(
+            winston.format.timestamp(),
+            filePrefix(fileName),
+            winston.format.colorize(),
+            winston.format.printf(({ timestamp, level, message }) => {
+                return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+            })
+        ),
+        transports: [
+            new winston.transports.Console(),
+            // Add more transports as needed
+        ],
+    });
+};
 
 function logRequestResponse(req, res, next) {
     logger.info(`${req.method} ${req.originalUrl}`);
-  
-   
-  
+
+
+
     res.on('finish', () => {
-      logger.info(`${res.statusCode} ${res.statusMessage}`);
+        logger.info(`${res.statusCode} ${res.statusMessage}`);
     });
 
     next();
 }
 
-module.exports = {createLoggerWithPrefix, logRequestResponse, logger};
+module.exports = { createLoggerWithPrefix, logRequestResponse, logger };

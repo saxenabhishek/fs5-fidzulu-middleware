@@ -15,3 +15,6 @@
 - "npm test": Run Jest test cases (Not setup yet)
 
 # IMPORTANT: Startup is for ClassA only. Can copy paste same for class B, but remember to change names to class B
+
+
+Harsh Shah - ClassB - Laptops

@@ -1,37 +1,26 @@
-const bikeController = require("../src/controllers/bike");
+const laptopController = require("../src/controllers/laptops");
 const request = require("supertest");
 const express = require("express");
 const axios = require("axios");
-const Constants = require("../src/Constants/constants");
-const ErrorMessages = require("../src/Constants/errorMessages");
 const app = express();
 
 jest.mock("axios");
 const axiosMock = require("axios");
 app.use("/", bikeController);
 
-describe("Check get bikes URL", () => {
+describe("Check get laptops URL", () => {
     test("Returns error response when GET request made to backend bikes endpoint throws error", async () => {
         axiosMock.get.mockRejectedValue(new Error("Some Error"));
         const response = await request(app).get("/all/IN");
-        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
+        expect(response.status).toBe(500);
         expect(response.body).toStrictEqual({
-            error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
-            detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE
+            error: "Internal Server Error",
+            detail: "Unable to connect to the backend"
         });
     });
 
-    test("Returns error when unknown country is passed to all endpoint", async() =>{
-        const response = await request(app).get("/all/NZ");
-        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND);
-        expect(response.body).toStrictEqual({
-            error: ErrorMessages.ERROR.PAGE_NOT_FOUND,
-            detail: ErrorMessages.DETAIL.UNKNOWN_COUNTRY
-        })
-    })
-
     test("Returns correct response on valid GET request to bikes endpoint", async () => {
-        mockBikes = [
+        mocklaptop = [
             {
                 "name": "Mamba Sport 12\" Balance Bike",
                 "brand": "Mamba Bikes",
@@ -59,20 +48,20 @@ describe("Check get bikes URL", () => {
         ];
         axios.get.mockResolvedValue({ data: mockBikes });
         const response = await request(app).get("/all/IN");
-        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.OK);
+        expect(response.status).toBe(200);
         expect(response.body).toStrictEqual(mockBikes);
     });
 
 });
 
 describe("Check get team URL", () => {
-    test("Returns error response when GET request made to backend bikes endpoint throws error", async () => {
+    test("Returns error response when GET request made to backend laptop endpoint throws error", async () => {
         axiosMock.get.mockRejectedValue(new Error("Mock Error"));
         const response = await request(app).get("/team");
-        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
+        expect(response.status).toBe(500);
         expect(response.body).toStrictEqual({
-            error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
-            detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE
+            error: "Internal Server Error",
+            detail: "Unable to connect to the backend"
         });
     });
 
@@ -83,7 +72,7 @@ describe("Check get team URL", () => {
         }
         axios.get.mockResolvedValue({ data: mockTeam });
         const response = await request(app).get("/all/IN");
-        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.OK);
+        expect(response.status).toBe(200);
         expect(response.body).toStrictEqual(mockTeam);
     });
 

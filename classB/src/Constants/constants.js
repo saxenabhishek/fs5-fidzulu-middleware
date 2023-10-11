@@ -14,6 +14,7 @@ const HTTP_STATUS_CODE = {
     INTERNAL_SERVER_ERROR: 500
 }
 
+
 const APPLICATION_ROUTES = {
     LAPTOP_ROUTES:{
         DEFAULT: "/classB/laptops",
@@ -25,6 +26,12 @@ const APPLICATION_ROUTES = {
         ALL_DVDS: "/all/:location",
         DVDS_TEAM: "/team"
     },
+    BOOK_ROUTES:{
+        DEFAULT: "/classB/books",
+        ALL_BOOKS: "/all/:location",
+        BOOKS_TEAM: "/teams"
+    }
 }
 module.exports = {ENV, APPLICATION_ROUTES,HTTP_STATUS_CODE};
+
 

@@ -1,36 +1,40 @@
-const express = require('express');
+const express = require("express");
+const axios = require("axios");
+const {logRequestResponse, createLoggerWithPrefix} = require("../utils/logger");
 const router = express.Router();
-const axios=require('axios');
-// Define routes for books
 
+router.use(logRequestResponse);
 
-router.get('/all/location', (req, res) => {
-  // Handle the route logic for books
-  res.send('Get all books by location');
+const logger = createLoggerWithPrefix("Book Service");
 
+router.get("/all/:location", async(req, resp) => {
+    let location = req.params.location;
+    let backendResp;
+    try{
+        backendResp = await axios.get("http://127.0.0.1:8080/food");
+        resp.status(200).json(backendResp.data);
+    } catch(e){
+        logger.error("Could not connect to backend for getting book details. ERROR:\n"+e);
+        resp.status(500).json({
+            error: "Internal Server Error",
+            detail: "Unable to connect to the backend"
+        });
+    }
 });
 
-router.get('/team', (req, res) => {
-  // Handle the route logic for book team information
-  res.send('Get book team information');
+router.get("/team", async(req, resp) =>{
 
+    let backendResp;
+    try{
+        backendResp = await axios.get("");
+        resp.status(200).json(backendResp.data);
+    } catch(e){
+        logger.error("Could not connect to backend for getting book team details\n. ERROR:", e);
+        resp.status(500).json({
+            error: "Internal Server Error",
+            detail: "Unable to connect to the backend"
+        });
+    }
 });
 
-router.get('/api/data', async (req, res) => {
-  try {
-    // Make an HTTP GET request using Axios
-    const response = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
-    // Send the data from the external API as a response
-    res.json(response.data);
-  } catch (error) {
-    // Handle errors gracefully
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-
-function testMethod(){
-  return true;
-}
-
-module.exports = router
+module.exports = router;

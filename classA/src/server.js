@@ -1,29 +1,26 @@
 const express = require('express');
 const axios = require('axios');
+const bikeController = require("./controllers/bike");
 
- 
+/**
+ * Application Constants (move to constants file/ environemnt variables later)
+ */
+const PORT = 3021;
+
+/**
+ * MIDDLEWARE definitions
+ */
+const unknownEndpointHandler = (req, resp) =>{
+  resp.status(404).json({
+    error: "Page not found",
+    detail: "Requested URL does not exist"
+  });
+}
 
 const app = express();
-//Need to put this in environment variables at a later time
-const PORT = 3000;
+app.use("/classA/bikes", bikeController);
 
- 
-
-// Define a route that makes an Axios GET request to an external API
-app.get('/api/data', async (req, res) => {
-  try {
-    // Make an HTTP GET request using Axios
-    const response = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
-
- 
-
-    // Send the data from the external API as a response
-    res.json(response.data);
-  } catch (error) {
-    // Handle errors gracefully
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+app.use(unknownEndpointHandler);
 
  
 
@@ -31,9 +28,3 @@ app.get('/api/data', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-function testMethod(){
-  return true;
-}
-
-exports = {testMethod}

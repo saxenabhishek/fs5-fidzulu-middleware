@@ -2,6 +2,8 @@ const bikeController = require("../src/controllers/bike");
 const request = require("supertest");
 const express = require("express");
 const axios = require("axios");
+const Constants = require("../src/Constants/constants");
+const ErrorMessages = require("../src/Constants/errorMessages");
 const app = express();
 
 jest.mock("axios");
@@ -14,8 +16,8 @@ describe("Check get bikes URL", () => {
         const response = await request(app).get("/all/IN");
         expect(response.status).toBe(500);
         expect(response.body).toStrictEqual({
-            error: "Internal Server Error",
-            detail: "Unable to connect to the backend"
+            error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
+            detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE
         });
     });
 
@@ -60,8 +62,8 @@ describe("Check get team URL", () => {
         const response = await request(app).get("/team");
         expect(response.status).toBe(500);
         expect(response.body).toStrictEqual({
-            error: "Internal Server Error",
-            detail: "Unable to connect to the backend"
+            error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
+            detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE
         });
     });
 

@@ -54,7 +54,7 @@ describe("Check get book URL", () => {
 describe("Check get team URL", () => {
     test("Returns error response when GET request made to backend books endpoint throws error", async () => {
         axiosMock.get.mockRejectedValue(new Error("Mock Error"));
-        const response = await request(app).get("/team");
+        const response = await request(app).get("/teams");
         expect(response.status).toBe(500);
         expect(response.body).toStrictEqual({
             error: "Internal Server Error",
@@ -68,7 +68,7 @@ describe("Check get team URL", () => {
             "membersNames": ["Senthooran", "Gayatri", "Harsh", "Suman", "Kshama", "Mahima", "Sinchana", "Shevanth"]
         }
         axios.get.mockResolvedValue({ data: mockTeam });
-        const response = await request(app).get("/all/IN");
+        const response = await request(app).get("/teams");
         expect(response.status).toBe(200);
         expect(response.body).toStrictEqual(mockTeam);
     });

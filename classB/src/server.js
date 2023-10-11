@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3022;
-const port = 3022;
+
 
 // Import your controller classes
 const laptopController = require("./controllers/laptops");

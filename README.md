@@ -20,3 +20,7 @@ Here `:location` is a path variable that accepts `US-NC` (for North Carolina), `
 
 #### The `/team`  path
 
+# IMPORTANT: Startup is for ClassA only. Can copy paste same for class B, but remember to change names to class B
+
+
+Harsh Shah - ClassB - Laptops

@@ -8,8 +8,8 @@ const bookController= require('./controllers/books');
 
 
 // Use Express Router for each controller
-app.use('classB/laptop', laptopController);
-app.use('classB/book', bookController);
+app.use('/classB/laptop', laptopController);
+app.use('/classB/book', bookController);
 
 
 // Start the Express server

@@ -1,14 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const axios=require('axios');
 // Define routes for books
+
+
 router.get('/all/location', (req, res) => {
-  // Handle the route logic for bikes
+  // Handle the route logic for books
   res.send('Get all books by location');
+
 });
 
 router.get('/team', (req, res) => {
   // Handle the route logic for book team information
   res.send('Get book team information');
+
 });
 
 router.get('/api/data', async (req, res) => {

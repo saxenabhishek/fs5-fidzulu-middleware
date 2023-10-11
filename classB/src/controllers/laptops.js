@@ -1,39 +1,40 @@
-const express = require('express');
-const axios=require('axios')
+const express = require("express");
+const axios = require("axios");
+const {logRequestResponse, createLoggerWithPrefix} = require("../utils/logger");
 const router = express.Router();
-// Define routes for bikes
-router.get('/all/location',async  (req, res) => {
-    
-  const response=await axios.get('http://localhost:8080/food');
-  res.json(response)
-  res.send('Get all bikes by location');
+
+router.use(logRequestResponse);
+
+const logger = createLoggerWithPrefix("Laptop Service");
+
+router.get("/all/:location", async(req, resp) => {
+    let location = req.params.location;
+    let backendResp;
+    try{
+        backendResp = await axios.get("http://127.0.0.1:8080/food");
+        resp.status(200).json(backendResp.data);
+    } catch(e){
+        logger.error("Could not connect to backend for getting laptop details. ERROR:\n"+e);
+        resp.status(500).json({
+            error: "Internal Server Error",
+            detail: "Unable to connect to the backend"
+        });
+    }
 });
 
-router.get('/team', (req, res) => {
-  // Handle the route logic for bike team information
-  res.send('Get bike team information');
+router.get("/team", async(req, resp) =>{
+
+    let backendResp;
+    try{
+        backendResp = await axios.get("");
+        resp.status(200).json(backendResp.data);
+    } catch(e){
+        logger.error("Could not connect to backend for getting bike team details\n. ERROR:", e);
+        resp.status(500).json({
+            error: "Internal Server Error",
+            detail: "Unable to connect to the backend"
+        });
+    }
 });
 
-// Make sure to import Axios if you haven't already
-
-router.get('/api/data', (req, res) => {
-  // Make an HTTP GET request using Axios
-  axios.get('http://127.0.0.1:8080/food')
-    .then(response => {
-      console.log("Success response---");
-      // Send the data from the external API as a response
-      res.json(response.data);
-    })
-    .catch(error => {
-      // Handle errors gracefully
-      res.status(500).json({ error: 'Internal Server Error' });
-    });
-});
-
-
-
-function testMethod(){
-  return true;
-}
-
-module.exports = router
+module.exports = router;

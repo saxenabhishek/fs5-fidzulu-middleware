@@ -41,7 +41,10 @@ router.get(Constants.APPLICATION_ROUTES.BOOK_ROUTES.BOOKS_TEAM, async(req, resp)
     let backendResp;
     try{
         //TODO: Get axios URL from env
-        backendResp = await axios.get(Constants.ENV.HOST_BOOKS);
+        backendUrl = `${Constants.ENV.HOST_BOOKS}/teams`;
+        console.log(backendUrl);
+        
+        backendResp = await axios.get(backendUrl);
         resp.status(200).json(backendResp.data);
     } catch(e){
         logger.error("Could not connect to backend for getting book teams details\n. ERROR:", e);

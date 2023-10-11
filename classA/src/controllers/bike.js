@@ -20,8 +20,7 @@ router.get(Constants.APPLICATION_ROUTES.BIKE_ROUTES.ALL_BIKES, async(req, resp) 
     }
     let backendResp;
     try{
-        //TODO: Axios URL from env
-        backendResp = await axios.get(Constants.ENV.HOST_BIKES);
+        backendResp = await axios.get(`${Constants.ENV.HOST_BIKES}/all/${location}`);
         resp.status(Constants.HTTP_STATUS_CODE.OK).json(backendResp.data);
     } catch(e){
         logger.error("Could not connect to backend for getting bike details. ERROR:\n"+e);
@@ -37,7 +36,7 @@ router.get(Constants.APPLICATION_ROUTES.BIKE_ROUTES.BIKES_TEAM, async(req, resp)
     let backendResp;
     try{
         //TODO: Get axios URL from env
-        backendResp = await axios.get(Constants.ENV.HOST_BIKES);
+        backendResp = await axios.get(`${Constants.ENV.HOST_BIKES}/teams`);
         resp.status(Constants.HTTP_STATUS_CODE.OK).json(backendResp.data);
     } catch(e){
         logger.error("Could not connect to backend for getting bike team details\n. ERROR:", e);

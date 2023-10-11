@@ -1,17 +1,22 @@
 # Fidzulu Middleware
 
-## Dependencies
-- axios
-- express
+## Class B
+Class B runs on port 3021.
 
-## Dev-dependencies
-- Nodemon (to tell compiler to watch for changes and rerun on changes)
-- jest (testing framework. Not setup completely. Will update soon. Pls let scrum master know if you do set it up properly)
+Class B receives requests from the frontend client and passes them onto the backend. It receives the data sent by the backend, packages it in a format suitable for the frontend and then transmits it to the frontend.
 
-# Scripts
-## Run these from the root level (Where package.json is located)
-- "npm run dev": Start application in dev mode. (Relaunched on changes)
-- "npm start": Start application in prod mode. (Will not launch in watch mode)
-- "npm test": Run Jest test cases (Not setup yet)
+It deals with Bike, Food, and Toy models.
 
-# IMPORTANT: Startup is for ClassA only. Can copy paste same for class B, but remember to change names to class B
+The server defines routers for each of the above models- bike, food and toy.
+
+### Bike Router
+The bike router exposes two endpoints: 
+- "`classA/bikes/all/:location`"
+- "`classA/bikes/team`"
+
+#### The `/all/:location` path
+
+Here `:location` is a path variable that accepts `US-NC` (for North Carolina), `IE` (for Ireland), or `IN` (for India), based on which price calculation is applied to convert the prices (which are in USD) into the appropriate currency and apply the appropriate sales tax.
+
+#### The `/team`  path
+

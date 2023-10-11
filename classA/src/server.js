@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const bikeController = require("./controllers/bike");
-
+const toyController = require("./controllers/toy");
 /**
  * Application Constants (move to constants file/ environemnt variables later)
  */
@@ -19,6 +19,7 @@ const unknownEndpointHandler = (req, resp) =>{
 
 const app = express();
 app.use("/classA/bikes", bikeController);
+app.use("/classA/toys", toyController);
 
 app.use(unknownEndpointHandler);
 

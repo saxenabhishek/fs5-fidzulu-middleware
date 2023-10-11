@@ -11,7 +11,6 @@ const logger = createLoggerWithPrefix("Book Service");
 
 router.get(Constants.APPLICATION_ROUTES.BOOK_ROUTES.ALL_BOOKS, async(req, resp) => {
     let location = req.params.location;
-    console.log(location)
     if(location != "IN" && location!="IE" && location!="US-NC"){
         resp.status(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND).json({
             error: ErrorMessages.ERROR.PAGE_NOT_FOUND,

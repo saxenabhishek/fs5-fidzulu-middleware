@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const bikeController = require("./controllers/bike");
+const toyController = require("./controllers/toy");
 const Constants = require("./Constants/constants");
 const ErrorConstants = require("./Constants/errorMessages");
 /**
@@ -11,7 +12,7 @@ const ErrorConstants = require("./Constants/errorMessages");
  * MIDDLEWARE definitions
  */
 const unknownEndpointHandler = (req, resp) =>{
-  resp.status(404).json({
+  resp.status(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND).json({
     error: ErrorConstants.ERROR.PAGE_NOT_FOUND,
     detail: ErrorConstants.DETAIL.PAGE_NOT_FOUND
   });
@@ -19,6 +20,7 @@ const unknownEndpointHandler = (req, resp) =>{
 
 const app = express();
 app.use(Constants.APPLICATION_ROUTES.BIKE_ROUTES.DEFAULT, bikeController);
+app.use("/classA/toys", toyController);
 
 app.use(unknownEndpointHandler);
 

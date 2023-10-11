@@ -1,4 +1,5 @@
 const express = require("express");
+var cors = require('cors')
 const axios = require("axios");
 const laptopController = require("./controllers/laptops");
 const dvdController = require("./controllers/dvd");
@@ -21,7 +22,7 @@ const unknownEndpointHandler = (req, resp) =>{
 const app = express();
 app.use(Constants.APPLICATION_ROUTES.LAPTOP_ROUTES.DEFAULT, laptopController);
 
-
+app.use(cors())
 
 app.use(unknownEndpointHandler);
 

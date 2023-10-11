@@ -44,7 +44,7 @@ router.get(Constants.APPLICATION_ROUTES.BOOK_ROUTES.BOOKS_TEAM, async(req, resp)
         backendResp = await axios.get(Constants.ENV.HOST_BOOKS);
         resp.status(200).json(backendResp.data);
     } catch(e){
-        logger.error("Could not connect to backend for getting book team details\n. ERROR:", e);
+        logger.error("Could not connect to backend for getting book teams details\n. ERROR:", e);
         resp.status(500).json({
             error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
             detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE

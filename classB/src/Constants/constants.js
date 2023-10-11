@@ -21,5 +21,5 @@ const APPLICATION_ROUTES = {
         LAPTOPS_TEAM: "/teams"
     },
 }
-module.exports = {ENV, APPLICATION_ROUTES};
+module.exports = {ENV, APPLICATION_ROUTES,HTTP_STATUS_CODE};
 

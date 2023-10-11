@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const laptopController = require("./controllers/laptops");
 const dvdController = require("./controllers/dvd");
+const bookController = require("./controllers/books");
 const Constants = require("./Constants/constants");
 const ErrorConstants = require("./Constants/errorMessages");
 /**
@@ -20,6 +21,7 @@ const unknownEndpointHandler = (req, resp) =>{
 
 const app = express();
 app.use(Constants.APPLICATION_ROUTES.LAPTOP_ROUTES.DEFAULT, laptopController);
+app.use(Constants.APPLICATION_ROUTES.BOOK_ROUTES.DEFAULT, bookController);
 
 
 app.use(unknownEndpointHandler);

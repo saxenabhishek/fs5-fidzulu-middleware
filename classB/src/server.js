@@ -1,4 +1,5 @@
 const express = require("express");
+var cors = require('cors')
 const axios = require("axios");
 const laptopController = require("./controllers/laptops");
 const dvdController = require("./controllers/dvd");
@@ -21,10 +22,10 @@ const unknownEndpointHandler = (req, resp) =>{
 const app = express();
 app.use(Constants.APPLICATION_ROUTES.DVD_ROUTES.DEFAULT, dvdController);
 
+app.use(cors())
 
 app.use(unknownEndpointHandler);
 
- 
 
 // Start the Express server
 app.listen(Constants.ENV.PORT, () => {

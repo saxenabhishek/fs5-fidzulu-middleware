@@ -13,6 +13,11 @@ const APPLICATION_ROUTES = {
         ALL_LAPTOPS: "/all/:location",
         LAPTOPS_TEAM: "/team"
     },
+    BOOK_ROUTES:{
+        DEFAULT: "/classB/books",
+        ALL_BOOKS: "/all/:location",
+        BOOKS_TEAM: "/team"
+    }
 }
 module.exports = {ENV, APPLICATION_ROUTES};
 

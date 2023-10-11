@@ -12,7 +12,7 @@ const ErrorConstants = require("./Constants/errorMessages");
  * MIDDLEWARE definitions
  */
 const unknownEndpointHandler = (req, resp) =>{
-  resp.status(404).json({
+  resp.status(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND).json({
     error: ErrorConstants.ERROR.PAGE_NOT_FOUND,
     detail: ErrorConstants.DETAIL.PAGE_NOT_FOUND
   });

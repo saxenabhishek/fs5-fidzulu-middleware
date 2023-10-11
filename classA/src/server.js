@@ -6,7 +6,7 @@ const toyController = require("./controllers/toy");
 const Constants = require("./Constants/constants");
 const ErrorConstants = require("./Constants/errorMessages");
 const foodController = require("./controllers/food");
-
+const cors = require("cors");
 /**
  * Application Constants (move to constants file/ environemnt variables later)
  */
@@ -22,6 +22,7 @@ const unknownEndpointHandler = (req, resp) => {
 };
 
 const app = express();
+app.use( cors() );
 app.use(Constants.APPLICATION_ROUTES.BIKE_ROUTES.DEFAULT, bikeController);
 app.use("/classA/toys", toyController);
 

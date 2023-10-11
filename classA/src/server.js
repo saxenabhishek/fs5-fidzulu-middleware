@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+var cors = require('cors')
 const bikeController = require("./controllers/bike");
 const toyController = require("./controllers/toy");
 const Constants = require("./Constants/constants");
@@ -26,7 +27,7 @@ app.use("/classA/toys", toyController);
 
 app.use("/classA/food", foodController);
 app.use(unknownEndpointHandler);
-
+app.use(cors());
 // Start the Express server
 app.listen(Constants.ENV.PORT, () => {
   console.log(`Server is running on port ${Constants.ENV.PORT}`);

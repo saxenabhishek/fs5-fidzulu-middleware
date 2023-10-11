@@ -7,7 +7,7 @@ router.use(logRequestResponse);
 
 const logger = createLoggerWithPrefix("Food Service");
 
-router.get("/all/:location", async(req, resp) => {
+router.get(Cons, async(req, resp) => {
     let location = req.params.location;
     let backendResp;
     try{

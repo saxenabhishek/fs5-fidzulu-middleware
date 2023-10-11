@@ -1,18 +1,32 @@
 const express = require("express");
-const app = express();
-const port = 3022;
-
-
-// Import your controller classes
+const axios = require("axios");
 const laptopController = require("./controllers/laptops");
-const bookController = require("./controllers/books");
+const dvdController = require("./controllers/dvd");
+const Constants = require("./Constants/constants");
+const ErrorConstants = require("./Constants/errorMessages");
+/**
+ * Application Constants (move to constants file/ environemnt variables later)
+ */
 
-// Use Express Router for each controller
-app.use('/classB/laptop', laptopController);
-app.use('/classB/book', bookController);
+/**
+ * MIDDLEWARE definitions
+ */
+const unknownEndpointHandler = (req, resp) =>{
+  resp.status(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND).json({
+    error: ErrorConstants.ERROR.PAGE_NOT_FOUND,
+    detail: ErrorConstants.DETAIL.PAGE_NOT_FOUND
+  });
+}
 
+const app = express();
+app.use(Constants.APPLICATION_ROUTES.LAPTOP_ROUTES.DEFAULT, laptopController);
+
+
+app.use(unknownEndpointHandler);
+
+ 
 
 // Start the Express server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(Constants.ENV.PORT, () => {
+  console.log(`Server is running on port ${Constants.ENV.PORT}`);
 });

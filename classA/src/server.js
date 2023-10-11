@@ -1,33 +1,32 @@
-const express = require('express');
-const axios = require('axios');
+const express = require("express");
+const axios = require("axios");
 const bikeController = require("./controllers/bike");
-const foodController = require("./controllers/food");
-
-
+const toyController = require("./controllers/toy");
+const Constants = require("./Constants/constants");
+const ErrorConstants = require("./Constants/errorMessages");
 /**
  * Application Constants (move to constants file/ environemnt variables later)
  */
-const PORT = 3021;
 
 /**
  * MIDDLEWARE definitions
  */
 const unknownEndpointHandler = (req, resp) =>{
-  resp.status(404).json({
-    error: "Page not found",
-    detail: "Requested URL does not exist"
+  resp.status(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND).json({
+    error: ErrorConstants.ERROR.PAGE_NOT_FOUND,
+    detail: ErrorConstants.DETAIL.PAGE_NOT_FOUND
   });
 }
 
 const app = express();
-app.use("/classA/bikes", bikeController);
-app.use("/classA/food", foodController);
+app.use(Constants.APPLICATION_ROUTES.BIKE_ROUTES.DEFAULT, bikeController);
+app.use("/classA/toys", toyController);
 
 app.use(unknownEndpointHandler);
 
  
 
 // Start the Express server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(Constants.ENV.PORT, () => {
+  console.log(`Server is running on port ${Constants.ENV.PORT}`);
 });

@@ -20,7 +20,24 @@ Here `:location` is a path variable that accepts `US-NC` (for North Carolina), `
 
 #### The `/team`  path
 
-# IMPORTANT: Startup is for ClassA only. Can copy paste same for class B, but remember to change names to class B
+The `/team` endpoint returns a JSON object with the team name and all team member names.
 
+*Response Format*
+```json
+{
+"team": "TeamName",
+"membersNames": ["Member Name 1", "Member Name 2"]
+}
+```
 
-Harsh Shah - ClassB - Laptops
+#### Error handling
+
+- Internal Server Error (500) is thrown when the backend is unreachable
+- Page Not Found Error (404) is thrown when a non-existent endpoint is requested or when the `all` endpoint's `location` path variable is invalid
+
+*Error Response Format*
+```json
+{
+    "error": "Error Type",
+    "detail": "More insight into why the error occured"
+}``` 

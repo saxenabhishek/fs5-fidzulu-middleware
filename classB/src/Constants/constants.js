@@ -11,7 +11,7 @@ const APPLICATION_ROUTES = {
     LAPTOP_ROUTES:{
         DEFAULT: "/classB/laptops",
         ALL_LAPTOPS: "/all/:location",
-        LAPTOPS_TEAM: "/team"
+        LAPTOPS_TEAM: "/teams"
     },
 }
 module.exports = {ENV, APPLICATION_ROUTES};

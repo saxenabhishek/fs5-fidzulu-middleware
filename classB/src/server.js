@@ -22,9 +22,9 @@ const app = express();
 app.use(Constants.APPLICATION_ROUTES.LAPTOP_ROUTES.DEFAULT, laptopController);
 
 
+
 app.use(unknownEndpointHandler);
 
- 
 
 // Start the Express server
 app.listen(Constants.ENV.PORT, () => {

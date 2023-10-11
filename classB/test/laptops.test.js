@@ -6,7 +6,7 @@ const app = express();
 
 jest.mock("axios");
 const axiosMock = require("axios");
-app.use("/", bikeController);
+app.use("/", laptopController);
 
 describe("Check get laptops URL", () => {
     test("Returns error response when GET request made to backend bikes endpoint throws error", async () => {

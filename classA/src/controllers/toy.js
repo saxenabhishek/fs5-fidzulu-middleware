@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.use(logRequestResponse);
 
-const logger = createLoggerWithPrefix("Laptop Service");
+const logger = createLoggerWithPrefix("Toy Service");
 
 router.get("/all/:location", async(req, resp) => {
     let location = req.params.location;
@@ -14,7 +14,7 @@ router.get("/all/:location", async(req, resp) => {
         backendResp = await axios.get("http://127.0.0.1:8080/food");
         resp.status(200).json(backendResp.data);
     } catch(e){
-        logger.error("Could not connect to backend for getting laptop details. ERROR:\n"+e);
+        logger.error("Could not connect to backend for getting bike details. ERROR:\n"+e);
         resp.status(500).json({
             error: "Internal Server Error",
             detail: "Unable to connect to the backend"

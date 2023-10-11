@@ -26,7 +26,13 @@ router.get(Constants.APPLICATION_ROUTES.TOY_ROUTES.ALL_TOY, async(req, resp) => 
         console.log(backendUrl);
         
         backendResp = await axios.get(backendUrl);
-        resp.status(200).json(backendResp.data);
+        if(backendResp.data.success) resp.status(200).json(backendResp.data);
+        else {
+            resp.status(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({
+                error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
+                detail: backendResp.data.message
+            });
+        }
     } catch(e){
         logger.error("Could not connect to backend for getting toy details. ERROR:\n"+e);
         resp.status(500).json({
@@ -42,7 +48,13 @@ router.get(Constants.APPLICATION_ROUTES.TOY_ROUTES.TOY_TEAM, async(req, resp) =>
     try{
         //TODO: Get axios URL from env
         backendResp = await axios.get(Constants.ENV.HOST_TOYS + "/teams");
-        resp.status(200).json(backendResp.data);
+        if(backendResp.data.success) resp.status(200).json(backendResp.data);
+        else {
+            resp.status(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({
+                error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
+                detail: backendResp.data.message
+            });
+        }
     } catch(e){
         logger.error("Could not connect to backend for getting toy team details\n. ERROR:", e);
         resp.status(500).json({

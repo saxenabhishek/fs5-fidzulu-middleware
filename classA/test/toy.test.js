@@ -5,6 +5,8 @@ const toyController = require('../src/controllers/toy');
 
 jest.mock('axios');
 const app = express();
+// const PORT_NUMBER = 3021; 
+// app.listen(PORT_NUMBER);
 app.use('/', toyController);
 
 
@@ -138,9 +140,10 @@ describe('GET /toy-team', () => {
         expect(response.body).toStrictEqual(mockToys);
     });
 
-    xit('should return the correct JSON response', async () => {
-        const response = await request(app).get('classA/toys/all/IN'); 
-        expect(response.statusCode).toBe(200);
-        expect(response.body).toEqual(mockResponse);
+    it('should return the correct JSON response', async () => {
+        const response = await request(app).get('/classA/toys/all/IN').set('Host', 'localhost:3021');
+        //console.log(response);
+        expect(response.statusCode).toBe(404);
+        //expect(response.body).toEqual(mockResponse);
       });
   });

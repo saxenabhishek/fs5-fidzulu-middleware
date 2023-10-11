@@ -22,7 +22,7 @@ router.get(Constants.APPLICATION_ROUTES.BIKE_ROUTES.ALL_BIKES, async(req, resp) 
     try{
         //TODO: Axios URL from env
         backendResp = await axios.get(Constants.ENV.HOST_BIKES);
-        resp.status(Constants.HTTP_STATUS_CODE.OK).json(backendResp.data);
+        if(backendResp.data.success) resp.status(Constants.HTTP_STATUS_CODE.OK).json(backendResp.data);
     } catch(e){
         logger.error("Could not connect to backend for getting bike details. ERROR:\n"+e);
         resp.status(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({
@@ -38,7 +38,13 @@ router.get(Constants.APPLICATION_ROUTES.BIKE_ROUTES.BIKES_TEAM, async(req, resp)
     try{
         //TODO: Get axios URL from env
         backendResp = await axios.get(Constants.ENV.HOST_BIKES);
-        resp.status(Constants.HTTP_STATUS_CODE.OK).json(backendResp.data);
+        if(backendResp.data.success) resp.status(Constants.HTTP_STATUS_CODE.OK).json(backendResp.data);
+        else {
+            resp.status(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({
+                error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
+                detail: backendResp.data.message
+            });
+        }
     } catch(e){
         logger.error("Could not connect to backend for getting bike team details\n. ERROR:", e);
         resp.status(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({

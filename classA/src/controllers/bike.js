@@ -11,14 +11,21 @@ const logger = createLoggerWithPrefix("Bike Service");
 
 router.get(Constants.APPLICATION_ROUTES.BIKE_ROUTES.ALL_BIKES, async(req, resp) => {
     let location = req.params.location;
+    if(location != "IN" && location!="IE" && location!="US-NC"){
+        resp.status(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND).json({
+            error: ErrorMessages.ERROR.PAGE_NOT_FOUND,
+            detail: ErrorMessages.DETAIL.UNKNOWN_COUNTRY
+        })
+        return;
+    }
     let backendResp;
     try{
         //TODO: Axios URL from env
         backendResp = await axios.get(Constants.ENV.HOST_BIKES);
-        resp.status(200).json(backendResp.data);
+        resp.status(Constants.HTTP_STATUS_CODE.OK).json(backendResp.data);
     } catch(e){
         logger.error("Could not connect to backend for getting bike details. ERROR:\n"+e);
-        resp.status(500).json({
+        resp.status(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({
             error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
             detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE
         });
@@ -31,10 +38,10 @@ router.get(Constants.APPLICATION_ROUTES.BIKE_ROUTES.BIKES_TEAM, async(req, resp)
     try{
         //TODO: Get axios URL from env
         backendResp = await axios.get(Constants.ENV.HOST_BIKES);
-        resp.status(200).json(backendResp.data);
+        resp.status(Constants.HTTP_STATUS_CODE.OK).json(backendResp.data);
     } catch(e){
         logger.error("Could not connect to backend for getting bike team details\n. ERROR:", e);
-        resp.status(500).json({
+        resp.status(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({
             error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
             detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE
         });

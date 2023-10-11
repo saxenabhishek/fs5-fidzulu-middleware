@@ -14,12 +14,21 @@ describe("Check get bikes URL", () => {
     test("Returns error response when GET request made to backend bikes endpoint throws error", async () => {
         axiosMock.get.mockRejectedValue(new Error("Some Error"));
         const response = await request(app).get("/all/IN");
-        expect(response.status).toBe(500);
+        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
         expect(response.body).toStrictEqual({
             error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
             detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE
         });
     });
+
+    test("Returns error when unknown country is passed to all endpoint", async() =>{
+        const response = await request(app).get("/all/NZ");
+        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND);
+        expect(response.body).toStrictEqual({
+            error: ErrorMessages.ERROR.PAGE_NOT_FOUND,
+            detail: ErrorMessages.DETAIL.UNKNOWN_COUNTRY
+        })
+    })
 
     test("Returns correct response on valid GET request to bikes endpoint", async () => {
         mockBikes = [
@@ -50,7 +59,7 @@ describe("Check get bikes URL", () => {
         ];
         axios.get.mockResolvedValue({ data: mockBikes });
         const response = await request(app).get("/all/IN");
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.OK);
         expect(response.body).toStrictEqual(mockBikes);
     });
 
@@ -60,7 +69,7 @@ describe("Check get team URL", () => {
     test("Returns error response when GET request made to backend bikes endpoint throws error", async () => {
         axiosMock.get.mockRejectedValue(new Error("Mock Error"));
         const response = await request(app).get("/team");
-        expect(response.status).toBe(500);
+        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
         expect(response.body).toStrictEqual({
             error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
             detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE
@@ -74,7 +83,7 @@ describe("Check get team URL", () => {
         }
         axios.get.mockResolvedValue({ data: mockTeam });
         const response = await request(app).get("/all/IN");
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.OK);
         expect(response.body).toStrictEqual(mockTeam);
     });
 

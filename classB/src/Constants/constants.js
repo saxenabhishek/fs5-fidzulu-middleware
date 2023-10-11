@@ -13,6 +13,11 @@ const APPLICATION_ROUTES = {
         ALL_LAPTOPS: "/all/:location",
         LAPTOPS_TEAM: "/team"
     },
+    DVD_ROUTES:{
+        DEFAULT: "/classB/dvd",
+        ALL_DVDS: "/all/:location",
+        DVDS_TEAM: "/team"
+    },
 }
 module.exports = {ENV, APPLICATION_ROUTES};
 

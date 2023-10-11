@@ -22,9 +22,9 @@ const APPLICATION_ROUTES = {
         LAPTOPS_TEAM: "/teams"
     },
     DVD_ROUTES:{
-        DEFAULT: "/classB/dvd",
+        DEFAULT: "/classB/dvds",
         ALL_DVDS: "/all/:location",
-        DVDS_TEAM: "/team"
+        DVDS_TEAM: "/teams"
     },
     BOOK_ROUTES:{
         DEFAULT: "/classB/books",

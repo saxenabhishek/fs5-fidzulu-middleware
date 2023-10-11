@@ -46,7 +46,7 @@ router.get(Constants.APPLICATION_ROUTES.BOOK_ROUTES.BOOKS_TEAM, async(req, resp)
       //TODO: Get axios URL from env
       backendResp = await axios.get(`${Constants.ENV.HOST_BOOKS}/teams`);
       if(backendResp.data.success){
-          resp.status(Constants.HTTP_STATUS_CODE.OK).json(backendResp.data);
+          resp.status(Constants.HTTP_STATUS_CODE.OK).json(backendResp.data.body);
       }
       else{
           resp.status(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({

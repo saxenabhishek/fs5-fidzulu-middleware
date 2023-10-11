@@ -16,7 +16,7 @@ const APPLICATION_ROUTES = {
     BOOK_ROUTES:{
         DEFAULT: "/classB/books",
         ALL_BOOKS: "/all/:location",
-        BOOKS_TEAM: "/team"
+        BOOKS_TEAM: "/teams"
     }
 }
 module.exports = {ENV, APPLICATION_ROUTES};

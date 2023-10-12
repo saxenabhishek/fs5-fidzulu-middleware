@@ -39,17 +39,17 @@ router.get(Constants.APPLICATION_ROUTES.FOOD_ROUTES.ALL_FOODS, async(req, resp) 
         });
     }
 });
-router.get("/teams", async(req, resp) =>{
+router.get(Constants.APPLICATION_ROUTES.FOOD_ROUTES.FOODS_TEAM, async(req, resp) =>{
 
     let backendResp;
     try{ 
         backendResp = await axios.get(`${Constants.ENV.HOST_FOOD}/teams`);
-        resp.status(200).json(backendResp.data);
+        resp.status(200).json(backendResp.data.body);
     } catch(e){
         logger.error("Could not connect to backend for getting food team details\n. ERROR:", e);
         resp.status(500).json({
             error: "Internal Server Error",
-            detail: "Unable to connect to the backend"
+            detail: "Unable to connect to backend"
         });
     }
 });

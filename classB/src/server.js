@@ -22,6 +22,7 @@ const unknownEndpointHandler = (req, resp) =>{
 
 const app = express();
 app.use( cors() );
+app.use(Constants.APPLICATION_ROUTES.DVD_ROUTES.DEFAULT, dvdController);
 app.use(Constants.APPLICATION_ROUTES.LAPTOP_ROUTES.DEFAULT, laptopController);
 app.use(Constants.APPLICATION_ROUTES.BOOK_ROUTES.DEFAULT, bookController);
 

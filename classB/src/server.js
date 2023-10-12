@@ -6,7 +6,6 @@ const dvdController = require("./controllers/dvd");
 const bookController = require("./controllers/books");
 const Constants = require("./Constants/constants");
 const ErrorConstants = require("./Constants/errorMessages");
-const cors = require("cors");
 /**
  * Application Constants (move to constants file/ environemnt variables later)
  */

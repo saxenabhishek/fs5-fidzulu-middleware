@@ -26,6 +26,11 @@ const APPLICATION_ROUTES = {
         ALL_TOY: "/all/:location",
         TOY_TEAM: "/teams"
     },
+    FOOD_ROUTES:{
+        DEFAULT: "/classA/food",
+        ALL_FOODS: "/all/:location",
+        FOODS_TEAM: "/teams"
+    }
 }
 module.exports = {ENV, APPLICATION_ROUTES, HTTP_STATUS_CODE};
 

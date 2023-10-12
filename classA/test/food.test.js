@@ -1,87 +1,155 @@
+
+
 const foodController = require("../src/controllers/food");
 const request = require("supertest");
 const express = require("express");
 const axios = require("axios");
+const Constants = require("../src/Constants/constants");
+const ErrorMessages = require("../src/Constants/errorMessages");
 const app = express();
 
 jest.mock("axios");
 const axiosMock = require("axios");
 app.use("/", foodController);
 
-// FoodId, FoodName, Category, ShelfLife, VegNonVeg
+const mockTeamSuccessfulResponse = {
+    "data": {
+        "success": true,
+        "message": "List of Books",
+        "body": [
+            {
+                "name": "Akhil P",
+                "department": "Backend",
+                "imageLink": "https://example.com/images/johndoe.jpg",
+                "teamName": "Backend Monsters",
+                "quote": "Life is like a bicycle, to keep your balance you must keep moving.",
+                "corpid": "ak1234"
+            },
+            {
+                "name": "Ayushi",
+                "department": "Backend",
+                "imageLink": "https://example.com/images/janesmith.jpg",
+                "teamName": "Backend Monsters",
+                "quote": "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
+                "corpid": "ay5678"
+            },
+            {
+                "name": "Sucheth Hegde",
+                "department": "Backend",
+                "imageLink": "https://example.com/images/michaeljohnson.jpg",
+                "teamName": "Backend Monsters",
+                "quote": "The only way to do great work is to love what you do.",
+                "corpid": "sh7890"
+            }
+        ]
+    }
+}
 
-describe("Check get food URL", () => {
-    test("Returns error response when GET request made to backend food endpoint throws error", async () => {
+const mockAllFoodSuccessfulResponse = {
+    "data":{
+      "success": true,
+      "message": "List of Food",
+      "body": [
+        {
+            "FoodId": 401,
+            "FoodName": "Spaghetti",
+            "Category": "Pasta",
+            "ShelfLife": 3,
+            "VegOrNon": 1,
+            "Price": 58.99,
+            "Ratings": 4.5,
+            "ImageUrl": "https://shorturl.at/dwW56"
+            },
+            {
+            "FoodId": 402,
+            "FoodName": "Lays",
+            "Category": "Chips",
+            "ShelfLife": 6,
+            "VegOrNon": 1,
+            "Price": 35.39,
+            "Ratings": 3.8,
+            "ImageUrl": "https://shorturl.at/oxBKZ"
+            }
+      ]
+    }
+}
+
+const mockFailResponse = {
+    "data": {
+      "success": false,
+      "message": "test error",
+      "body": []
+    }
+}
+
+describe("Check GET all food URL", () => {
+    test("when axios call errors out", async () => {
         axiosMock.get.mockRejectedValue(new Error("Some Error"));
         const response = await request(app).get("/all/IN");
-        expect(response.status).toBe(500);
+        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
         expect(response.body).toStrictEqual({
-            error: "Internal Server Error",
-            detail: "Unable to connect to the backend"
+            error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
+            detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE
         });
     });
 
-    test("Returns correct response on valid GET request to food endpoint", async () => {
-        mockFood = [
-            {
-                // FoodId, FoodName, Category, ShelfLife, VegNonVeg
-                "FoodId": 401,
-                "FoodName": "Spaghetti",
-                "Category": "Pasta",
-                "ShelfLife": 3,
-                "VegNonVeg": 1
-            },
-            {
-                "FoodId": 402,
-                "FoodName": "Lays",
-                "Category": "Chips",
-                "ShelfLife": 6,
-                "VegNonVeg": 1
-            },
-            {
-                "FoodId": 403,
-                "FoodName": "Jam",
-                "Category": "Spreads",
-                "ShelfLife": 6,
-                "VegNonVeg": 1
-            },
-            {
-                "FoodId": 404,
-                "FoodName": "Frozen Meat",
-                "Category": "Meat",
-                "ShelfLife": 1,
-                "VegNonVeg": 0
-            }
-        ];
-        axios.get.mockResolvedValue({ data: mockFood });
+    test("when backend response 'success' field is false", async () => {
+        axiosMock.get.mockResolvedValue(mockFailResponse);
         const response = await request(app).get("/all/IN");
-        expect(response.status).toBe(200);
-        expect(response.body).toStrictEqual(mockFood);
+        expect (response.status).toBe(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
+        expect(response.body).toStrictEqual({
+            error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
+            detail: mockFailResponse.data.message
+        })
+    });
+
+    test("when an unknown country is given as path variable", async () => {
+        const response = await request(app).get("/all/NZ");
+        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND);
+        expect(response.body).toStrictEqual({
+            error: ErrorMessages.ERROR.PAGE_NOT_FOUND,
+            detail: ErrorMessages.DETAIL.UNKNOWN_COUNTRY
+        })
+    });
+
+    test("when backend gives success response", async () => {
+        axios.get.mockResolvedValue(mockAllFoodSuccessfulResponse);
+        const response = await request(app).get("/all/IN");
+        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.OK);
+        expect(response.body).toStrictEqual(mockAllFoodSuccessfulResponse.data.body);
     });
 
 });
 
-describe("Check get team URL", () => {
-    test("Returns error response when GET request made to backend food endpoint throws error", async () => {
+describe("Check GET 'team' URL", () => {
+    test("when axios call errors out", async () => {
         axiosMock.get.mockRejectedValue(new Error("Mock Error"));
-        const response = await request(app).get("/team");
-        expect(response.status).toBe(500);
+        const response = await request(app).get("/teams");
+        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
         expect(response.body).toStrictEqual({
-            error: "Internal Server Error",
-            detail: "Unable to connect to the backend"
+            error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
+            detail: ErrorMessages.DETAIL.BACKEND_CONNECTION_FAILURE
         });
     });
 
-    test("Returns correct response on valid GET request to bikes endpoint", async () => {
-        mockTeam = {
-            "team": "Disco Ninjas",
-            "membersNames": ["Senthooran", "Gayatri", "Harsh", "Suman", "Kshama", "Mahima", "Sinchana", "Shevanth"]
-        }
-        axios.get.mockResolvedValue({ data: mockTeam });
-        const response = await request(app).get("/all/IN");
-        expect(response.status).toBe(200);
-        expect(response.body).toStrictEqual(mockTeam);
+    test("when backend response 'success' field is false", async () => {
+        axiosMock.get.mockResolvedValue(mockFailResponse);
+        const response = await request(app).get("/teams");
+        expect (response.status).toBe(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
+        expect(response.body).toStrictEqual({
+            error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
+            detail: mockFailResponse.data.message
+        })
+    })
+
+    test("when backend gives success response", async () => {
+        axios.get.mockResolvedValue(mockTeamSuccessfulResponse);
+        const response = await request(app).get("/teams");
+        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.OK);
+        expect(response.body).toStrictEqual(mockTeamSuccessfulResponse.data.body);
     });
 
 });
+
+
 

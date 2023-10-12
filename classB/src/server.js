@@ -1,11 +1,10 @@
 const express = require("express");
-const axios = require("axios");
+var cors = require('cors')
 const laptopController = require("./controllers/laptops");
 const dvdController = require("./controllers/dvd");
 const bookController = require("./controllers/books");
 const Constants = require("./Constants/constants");
 const ErrorConstants = require("./Constants/errorMessages");
-const cors = require("cors");
 /**
  * Application Constants (move to constants file/ environemnt variables later)
  */
@@ -22,13 +21,13 @@ const unknownEndpointHandler = (req, resp) =>{
 
 const app = express();
 app.use( cors() );
+app.use(Constants.APPLICATION_ROUTES.DVD_ROUTES.DEFAULT, dvdController);
 app.use(Constants.APPLICATION_ROUTES.LAPTOP_ROUTES.DEFAULT, laptopController);
 app.use(Constants.APPLICATION_ROUTES.BOOK_ROUTES.DEFAULT, bookController);
 
 
 app.use(unknownEndpointHandler);
 
- 
 
 // Start the Express server
 app.listen(Constants.ENV.PORT, () => {

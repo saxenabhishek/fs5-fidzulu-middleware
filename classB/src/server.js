@@ -1,6 +1,5 @@
 const express = require("express");
 var cors = require('cors')
-const axios = require("axios");
 const laptopController = require("./controllers/laptops");
 const dvdController = require("./controllers/dvd");
 const bookController = require("./controllers/books");

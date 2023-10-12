@@ -21,6 +21,11 @@ const APPLICATION_ROUTES = {
         ALL_BIKES: "/all/:location",
         BIKES_TEAM: "/teams"
     },
+    TOY_ROUTES:{
+        DEFAULT: "/classA/toys",
+        ALL_TOY: "/all/:location",
+        TOY_TEAM: "/teams"
+    },
     FOOD_ROUTES:{
         DEFAULT: "/classA/food",
         ALL_FOODS: "/all/:location",

@@ -1,6 +1,7 @@
 const ERROR = {
     INTERNAL_SERVER_ERROR: "Internal Server Error",
-    PAGE_NOT_FOUND: "Page not found"
+    PAGE_NOT_FOUND: "Page not found",
+    
 }
 const DETAIL = {
     PAGE_NOT_FOUND: "Requested resource does not exist or URL is invalid",

@@ -6,6 +6,8 @@ const ENV = {
     HOST_DVD: process.env.HOST_DVD,
     HOST_LAPTOPS: process.env.HOST_LAPTOPS,
 }
+
+
 const HTTP_STATUS_CODE = {
     OK: 200,
     CREATED: 201,
@@ -20,6 +22,11 @@ const APPLICATION_ROUTES = {
         ALL_LAPTOPS: "/all/:location",
         LAPTOPS_TEAM: "/teams"
     },
+    BOOK_ROUTES:{
+        DEFAULT: "/classB/books",
+        ALL_BOOKS: "/all/:location",
+        BOOKS_TEAM: "/teams"
+    }
 }
-module.exports = {ENV, APPLICATION_ROUTES,HTTP_STATUS_CODE};
+module.exports = {ENV, APPLICATION_ROUTES, HTTP_STATUS_CODE};
 

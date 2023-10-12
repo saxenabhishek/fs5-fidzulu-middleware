@@ -26,7 +26,8 @@ router.get(Constants.APPLICATION_ROUTES.TOY_ROUTES.ALL_TOY, async(req, resp) => 
         console.log(backendUrl);
         
         backendResp = await axios.get(backendUrl);
-        if(backendResp.data.success) resp.status(200).json(backendResp.data);
+        if(backendResp.data.success) 
+        resp.status(200).json(backendResp.data);
         else {
             resp.status(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({
                 error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
@@ -48,7 +49,8 @@ router.get(Constants.APPLICATION_ROUTES.TOY_ROUTES.TOY_TEAM, async(req, resp) =>
     try{
         //TODO: Get axios URL from env
         backendResp = await axios.get(Constants.ENV.HOST_TOYS + "/teams");
-        if(backendResp.data.success) resp.status(200).json(backendResp.data);
+        if(backendResp.data.success) 
+        resp.status(200).json(backendResp.data);
         else {
             resp.status(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({
                 error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,

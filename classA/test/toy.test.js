@@ -5,10 +5,7 @@ const toyController = require('../src/controllers/toy');
 
 jest.mock('axios');
 const app = express();
-// const PORT_NUMBER = 3021; 
-// app.listen(PORT_NUMBER);
 app.use('/', toyController);
-
 
 const mockResponse = {
     "0": [601, "LEGO Castle Set", "LEGO", "Building", "5-12 years", 23.59, 4.5, "https://shorturl.at/buyC0"],
@@ -25,21 +22,20 @@ const mockResponse = {
 describe('GET /all-toy', () => {
     it('should return toy data for a valid location', async () => {
       // Mock Axios response
-      axios.get.mockResolvedValue({ data: 'mocked toy data' });
-      const response = await request(app).get('/all/IN');
+      axios.get.mockResolvedValue({ data: { success: true, message: 'mocked toy data' } });
+      const response = await request(app).get('/all/US-NC');
       expect(response.statusCode).toBe(200);
-      //console.log(response.body);
-     // expect(response.body).toEqual('mocked toy data');
+      expect(response.body.message).toEqual('mocked toy data');
     });
 
-    it('should return 404 for an invalid location', async () => {
+   it('should return 404 for an invalid location', async () => {
         const response = await request(app).get('/all/INVALID');
         expect(response.statusCode).toBe(404);
         expect(response.body).toHaveProperty('error');
         expect(response.body).toHaveProperty('detail');
       });
 
-      it('should handle Axios error gracefully', async () => {
+    it('should handle Axios error gracefully', async () => {
         // Mock Axios error
         axios.get.mockRejectedValue(new Error('Axios error'));
         const response = await request(app).get('/all/IN');
@@ -52,10 +48,10 @@ describe('GET /all-toy', () => {
 describe('GET /toy-team', () => {
     it('should return toy team data', async () => {
       // Mock Axios response
-      axios.get.mockResolvedValue({ data: 'mocked toy team data' });
+      axios.get.mockResolvedValue({ data: { success: true, message: 'mocked toy team data' } });
       const response = await request(app).get('/teams');
       expect(response.statusCode).toBe(200);
-      expect(response.body).toEqual('mocked toy team data');
+      expect(response.body.message).toEqual('mocked toy team data');
     });
   
     it('should handle Axios error gracefully', async () => {
@@ -67,7 +63,7 @@ describe('GET /toy-team', () => {
       expect(response.body).toHaveProperty('detail');
     });
 
-    test("Returns correct response on valid GET request to toy endpoint", async () => {
+    it("Returns correct response on valid GET request to toy endpoint", async () => {
         mockToys = [
             {
                 "0": [
@@ -134,16 +130,14 @@ describe('GET /toy-team', () => {
                 "message": "List of Food"
                 }
         ];
-        axios.get.mockResolvedValue({ data: mockToys });
+        axios.get.mockResolvedValue({ data: {success: true, message: mockToys} });
         const response = await request(app).get("/all/IN");
         expect(response.statusCode).toBe(200);
-        expect(response.body).toStrictEqual(mockToys);
+        expect(response.body.message).toStrictEqual(mockToys);
     });
 
     it('should return the correct JSON response', async () => {
         const response = await request(app).get('/classA/toys/all/IN').set('Host', 'localhost:3021');
-        //console.log(response);
         expect(response.statusCode).toBe(404);
-        //expect(response.body).toEqual(mockResponse);
       });
   });

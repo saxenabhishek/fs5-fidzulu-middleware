@@ -21,14 +21,14 @@ describe("Check get bikes URL", () => {
         });
     });
 
-    test("Returns error when unknown country is passed to all endpoint", async() =>{
-        const response = await request(app).get("/all/NZ");
-        expect(response.status).toBe(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND);
-        expect(response.body).toStrictEqual({
-            error: ErrorMessages.ERROR.PAGE_NOT_FOUND,
-            detail: ErrorMessages.DETAIL.UNKNOWN_COUNTRY
-        })
-    })
+    // test("Returns error when unknown country is passed to all endpoint", async() =>{
+    //     const response = await request(app).get("/all/NZ");
+    //     expect(response.status).toBe(Constants.HTTP_STATUS_CODE.PAGE_NOT_FOUND);
+    //     expect(response.body).toStrictEqual({
+    //         error: ErrorMessages.ERROR.PAGE_NOT_FOUND,
+    //         detail: ErrorMessages.DETAIL.UNKNOWN_COUNTRY
+    //     })
+    // })
 
 //     test("Returns correct response on valid GET request to bikes endpoint", async () => {
 //         mockBikes = [

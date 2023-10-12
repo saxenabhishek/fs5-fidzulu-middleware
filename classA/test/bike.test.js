@@ -118,7 +118,7 @@ describe("Check GET all bikes URL", () => {
 describe("Check GET 'team' URL", () => {
     test("when axios call errors out", async () => {
         axiosMock.get.mockRejectedValue(new Error("Mock Error"));
-        const response = await request(app).get("/team");
+        const response = await request(app).get(Constants.APPLICATION_ROUTES.BIKE_ROUTES.BIKES_TEAM);
         expect(response.status).toBe(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
         expect(response.body).toStrictEqual({
             error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
@@ -128,7 +128,7 @@ describe("Check GET 'team' URL", () => {
 
     test("when backend response 'success' field is false", async () => {
         axiosMock.get.mockResolvedValue(mockFailResponse);
-        const response = await request(app).get("/team");
+        const response = await request(app).get(Constants.APPLICATION_ROUTES.BIKE_ROUTES.BIKES_TEAM);
         expect (response.status).toBe(Constants.HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
         expect(response.body).toStrictEqual({
             error: ErrorMessages.ERROR.INTERNAL_SERVER_ERROR,
@@ -138,7 +138,7 @@ describe("Check GET 'team' URL", () => {
 
     test("when backend gives success response", async () => {
         axios.get.mockResolvedValue(mockTeamSuccessfulResponse);
-        const response = await request(app).get("/team");
+        const response = await request(app).get(Constants.APPLICATION_ROUTES.BIKE_ROUTES.BIKES_TEAM);
         expect(response.status).toBe(Constants.HTTP_STATUS_CODE.OK);
         expect(response.body).toStrictEqual(mockTeamSuccessfulResponse.data.body);
     });

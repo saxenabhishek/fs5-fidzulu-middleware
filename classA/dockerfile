@@ -22,4 +22,4 @@ ENV PORT=3021
 EXPOSE 3021
 
 # Start your Express.js application
-CMD ["node", "app.js"]
+CMD ["node", "src/server.js"]

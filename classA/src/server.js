@@ -25,6 +25,9 @@ app.use( cors() );
 app.use(Constants.APPLICATION_ROUTES.BIKE_ROUTES.DEFAULT, bikeController);
 app.use("/classA/toys", toyController);
 app.use("/classA/food", foodController);
+//app.use(Constants.APPLICATION_ROUTES.BIKE_ROUTES.DEFAULT, bikeController);
+app.use(Constants.APPLICATION_ROUTES.TOY_ROUTES.DEFAULT, toyController);
+
 app.use(unknownEndpointHandler);
 
 // Start the Express server

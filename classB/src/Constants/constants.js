@@ -7,6 +7,7 @@ const ENV = {
     HOST_LAPTOPS: process.env.HOST_LAPTOPS,
 }
 
+
 const HTTP_STATUS_CODE = {
     OK: 200,
     CREATED: 201,
@@ -19,7 +20,7 @@ const APPLICATION_ROUTES = {
     LAPTOP_ROUTES:{
         DEFAULT: "/classB/laptops",
         ALL_LAPTOPS: "/all/:location",
-        LAPTOPS_TEAM: "/team"
+        LAPTOPS_TEAM: "/teams"
     },
     BOOK_ROUTES:{
         DEFAULT: "/classB/books",

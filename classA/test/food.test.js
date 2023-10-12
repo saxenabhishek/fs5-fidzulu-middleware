@@ -3,6 +3,8 @@ const request = require("supertest");
 const express = require("express");
 const axios = require("axios");
 const app = express();
+const ErrorMessages = require("../src/Constants/errorMessages");
+const Constants = require("../src/Constants/constants");
 
 jest.mock("axios");
 const axiosMock = require("axios");

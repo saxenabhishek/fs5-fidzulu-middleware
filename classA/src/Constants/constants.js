@@ -19,8 +19,13 @@ const APPLICATION_ROUTES = {
     BIKE_ROUTES:{
         DEFAULT: "/classA/bikes",
         ALL_BIKES: "/all/:location",
-        BIKES_TEAM: "/team"
+        BIKES_TEAM: "/teams"
     },
+    FOOD_ROUTES:{
+        DEFAULT: "/classA/food",
+        ALL_FOODS: "/all/:location",
+        FOODS_TEAM: "/teams"
+    }
 }
 module.exports = {ENV, APPLICATION_ROUTES, HTTP_STATUS_CODE};
 
